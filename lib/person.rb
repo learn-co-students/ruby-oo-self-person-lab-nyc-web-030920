@@ -1,56 +1,39 @@
-require 'pry'
-
 class Person
 
   attr_reader :name
-  attr_accessor :hygiene, :bank_account
+  attr_accessor :bank_account, :happiness, :hygiene
 
-  def initialize(name)
+  def initialize(name, bank_account = 25, happiness = 8, hygiene = 8)
     @name = name
-    @bank_account = 25
-    @happiness = 8
-    @hygiene = 8
+    @bank_account = bank_account
+    @happiness = happiness
+    @hygiene = hygiene
   end
 
-  def bank_account
-    @bank_account
-  end
-
-  def happiness=(happiness)
-
-    if happiness > 10
+  def happiness=(happiness_index)
+    @happiness = happiness_index
+    if happiness_index > 10
       @happiness = 10
-    elsif happiness < 0
+    elsif happiness_index < 0
       @happiness = 0
-    else
-      @happiness = happiness
     end
-
   end
 
-  def happiness
-    @happiness
+  def hygiene=(hygiene_index)
+    @hygiene = hygiene_index
+    if hygiene_index > 10
+      @hygiene = 10
+    elsif hygiene_index < 0
+      @hygiene = 0
+    end
   end
 
   def happy?
-    @happiness > 7 ? true : false 
-  end
-
-
-  def hygiene=(hygiene)
-
-    if hygiene > 10
-      @hygiene = 10
-    elsif hygiene < 0
-      @hygiene = 0
-    else
-      @hygiene = hygiene
-    end
-
+    @happiness > 7
   end
 
   def clean?
-    @hygiene > 7 ? true : false
+    @hygiene > 7
   end
 
   def get_paid(salary)
@@ -60,57 +43,35 @@ class Person
 
   def take_bath
     self.hygiene += 4
-    # @hygiene += 4
-
-    if @hygiene > 10
-      @hygiene = 10
-    elsif @hygiene < 0
-      @hygiene = 0
-    end
-     
     '♪ Rub-a-dub just relaxing in the tub ♫'
   end
 
   def work_out
     self.hygiene -= 3
     self.happiness += 2
-
-    if @hygiene < 0
-      @hygiene = 0
-    end
-    '♪ another one bites the dust ♫'
-
+    "♪ another one bites the dust ♫"
   end
 
   def call_friend(friend)
-
-    #for each instance of the friend and self object, increase happiness by 3
-    [friend, self].each do |object|
-      object.happiness += 3
-    end
+    self.happiness += 3
+    friend.happiness += 3
     "Hi #{friend.name}! It's #{self.name}. How are you?"
-    
   end
 
   def start_conversation(person, topic)
-   
-    objects = [self, person]
     if topic == "politics"
-      objects.each { |o| o.happiness -= 2}
-      first, second = ["partisan", "lobbyist"]
+      person.happiness -= 2
+      self.happiness -= 2
+      "blah blah partisan blah lobbyist"
     elsif topic == "weather"
-      objects.each { |o| o.happiness += 1}
-      first, second = ["sun", "rain"]
+      person.happiness += 1
+      self.happiness += 1
+      "blah blah sun blah rain"
+    elsif topic == "programming"
+      "blah blah blah blah blah"
     end
-    first ||= "blah"
-    second ||= "blah"
-    base_string = "blah blah #{first} blah #{second}"
 
   end
 
 
-
 end
-
-# binding.pry 
-0
